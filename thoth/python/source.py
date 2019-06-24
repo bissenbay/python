@@ -140,9 +140,12 @@ class Source:
         else:
             doc['type'] = "file"
             digest = hashlib.sha256()
-            with open(path, 'rb') as afile:
-                buf = afile.read()
-                digest.update(buf)
+            with open(path, 'rb') as f:
+                while True:
+                    chunk  = f.read(1024)
+                    if not chunk:
+                        break
+                     digest.update(chunk)
             doc['sha256'] = digest.hexdigest()
         return doc
 

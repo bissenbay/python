@@ -135,7 +135,7 @@ class Source:
         """Calculate hash for all files inside wheel file."""
         doc = {'name': os.path.basename(path)}
         if os.path.isdir(path):
-            doc['type'] = "wheel"
+            doc['type'] = "directory"
             doc['contents'] = [self._construct_contents(os.path.join(path, dir_item)) for dir_item in os.listdir(path)]
         else:
             doc['type'] = "file"
@@ -145,7 +145,7 @@ class Source:
                     chunk  = f.read(1024)
                     if not chunk:
                         break
-                     digest.update(chunk)
+                    digest.update(chunk)
             doc['sha256'] = digest.hexdigest()
         return doc
 
